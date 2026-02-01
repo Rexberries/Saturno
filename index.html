@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saturno - Teman Digitalmu</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a2e; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        #chat-container { width: 90%; max-width: 400px; background: #16213e; border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #0f3460; }
+        .bot-msg { background: #0f3460; padding: 12px; border-radius: 15px 15px 15px 0; margin-bottom: 15px; line-height: 1.4; border: 1px solid #e94560; }
+        .options { display: grid; gap: 10px; }
+        button { background: transparent; border: 1px solid #e94560; color: white; padding: 10px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #e94560; transform: translateY(-2px); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <div id="chat-box">
+        <div class="bot-msg" id="main-text">
+            🪐 <strong>Saturno:</strong><br>
+            Halo Cantik! Aku Saturno. [Nama Kamu] sedang tidak bisa membalas chat, tapi aku di sini untukmu. Apa yang sedang kamu rasakan sekarang?
+        </div>
+    </div>
+    
+    <div class="options" id="btn-group">
+        <button onclick="respond('senang')">😊 Aku senang banget!</button>
+        <button onclick="respond('sedih')">😔 Lagi sedih/overthinking</button>
+        <button onclick="respond('lelah')">😴 Capek banget hari ini</button>
+        <button onclick="respond('kangen')">💖 Kangen [Nama Kamu]</button>
+    </div>
+    
+    <button id="back-btn" class="hidden" onclick="resetChat()" style="margin-top: 15px; width: 100%;">Tanya Hal Lain</button>
+</div>
+
+<script>
+    const responses = {
+        'senang': "Wah, ikut senang! ✨ Simpan energi positif ini ya. Nanti ceritakan ke dia kalau sudah luang, dia pasti suka dengarnya!",
+        'sedih': "Peluk jauh dariku... 🪐 Tarik napas pelan-pelan. Kamu aman. Tuliskan saja semua di hatimu, aku akan menjaganya untukmu.",
+        'lelah': "Hari yang berat ya? Kamu sudah berjuang hebat hari ini. Istirahatlah sejenak, minum air, dan rebahan ya. Kamu cukup.",
+        'kangen': "Dia juga pasti kangen kamu! Sabar ya, cintanya sedang berjuang sebentar untuk masa depan kalian. 🥰"
+    };
+
+    function respond(type) {
+        document.getElementById('main-text').innerHTML = "🪐 <strong>Saturno:</strong><br>" + responses[type];
+        document.getElementById('btn-group').classList.add('hidden');
+        document.getElementById('back-btn').classList.remove('hidden');
+    }
+
+    function resetChat() {
+        location.reload();
+    }
+</script>
+
+</body>
+</html>
