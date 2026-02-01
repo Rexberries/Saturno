@@ -13,26 +13,30 @@
             --yellow: #ffd369;
         }
         body {
-            margin: 0; padding: 10px;
+            margin: 0; padding: 15px;
             font-family: 'Quicksand', sans-serif;
             background: var(--bg);
+            background-image: radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 20px);
+            background-size: 50px 50px;
             color: white;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
         }
         #container {
             background: var(--card);
-            width: 100%;
-            max-width: 400px; /* Diperlebar sedikit agar teks ngga numpuk */
-            padding: 25px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 100%; max-width: 400px;
+            padding: 25px; border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             text-align: center;
         }
-        /* Saturno Character */
+
+        /* Saturno Animasi */
         .saturn {
             position: relative; width: 100px; height: 100px; margin: 0 auto 10px;
-            animation: float 3s ease-in-out infinite;
+            transition: all 0.5s ease;
+        }
+        .saturn.thinking {
+            animation: shake 0.5s infinite; /* Efek mikir gemetar lucu */
         }
         .saturn-ball {
             width: 60px; height: 60px; background: #ffb347;
@@ -46,43 +50,52 @@
         .eyes { position: absolute; top: 25px; left: 18px; display: flex; gap: 12px; }
         .eye { width: 6px; height: 6px; background: #333; border-radius: 50%; }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); } }
+        .saturn { animation: float 3s ease-in-out infinite; }
 
         .bubble {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px 0;
-            font-size: 1rem;
-            line-height: 1.6;
-            text-align: left; /* Teks dibuat rata kiri agar rapi dibaca */
-            border-left: 4px solid var(--pink);
+            background: rgba(255,255,255,0.08);
+            padding: 20px; border-radius: 20px;
+            margin: 20px 0; font-size: 1rem; line-height: 1.6;
+            text-align: justify; /* Rata Kanan Kiri */
+            border-bottom: 3px solid var(--pink);
+            min-height: 50px;
         }
-        .options { display: flex; flex-direction: column; gap: 12px; }
+
+        .options { display: flex; flex-direction: column; gap: 10px; }
         button {
-            background: rgba(255,117,140,0.15);
+            background: rgba(255,117,140,0.1);
             border: 2px solid var(--pink);
-            color: white; padding: 14px; border-radius: 15px;
-            cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.95rem;
+            color: white; padding: 12px; border-radius: 15px;
+            cursor: pointer; font-family: inherit; font-weight: bold;
             transition: 0.3s;
         }
-        button:hover { background: var(--pink); transform: scale(1.02); }
-        .hidden { display: none; }
+        button:hover:not(:disabled) { background: var(--pink); transform: scale(1.02); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
         .reset-btn {
-            margin-top: 20px; background: none; border: none;
-            color: #aaa; text-decoration: underline; font-size: 0.85rem; cursor: pointer;
+            margin-top: 15px; background: none; border: none;
+            color: #888; text-decoration: underline; font-size: 0.8rem; cursor: pointer;
         }
+        .hidden { display: none; }
+
+        /* Titik-titik loading */
+        .dot-flashing {
+            display: inline-block; position: relative; width: 10px; height: 10px;
+            border-radius: 5px; background-color: var(--pink); color: var(--pink);
+            animation: dot-flashing 1s infinite linear alternate;
+            animation-delay: .5s; margin: 0 15px;
+        }
+        @keyframes dot-flashing { 0% { opacity: 1; } 50%, 100% { opacity: .2; } }
     </style>
 </head>
 <body>
 
 <div id="container">
-    <div class="saturn">
+    <div class="saturn" id="saturn-char">
         <div class="ring"></div>
-        <div class="saturn-ball">
+        <div class="saturn-body saturn-ball">
             <div class="eyes">
                 <div class="eye"></div>
                 <div class="eye"></div>
@@ -114,13 +127,21 @@
 
     function pilih(kategori) {
         const textElement = document.getElementById('text');
-        textElement.style.opacity = 0;
+        const saturn = document.getElementById('saturn-char');
+        const btnGroup = document.getElementById('btns');
+
+        // Sembunyikan tombol & Aktifkan mode mikir
+        btnGroup.style.pointerEvents = "none";
+        saturn.classList.add('thinking');
+        textElement.innerHTML = "Saturno sedang memikirkan kata-kata indah... <div class='dot-flashing'></div>";
+
+        // Delay 1.5 detik agar efek loading terasa
         setTimeout(() => {
+            saturn.classList.remove('thinking');
             textElement.innerHTML = respon[kategori];
-            textElement.style.opacity = 1;
-            document.getElementById('btns').classList.add('hidden');
+            btnGroup.classList.add('hidden');
             document.getElementById('reset').classList.remove('hidden');
-        }, 300);
+        }, 1500);
     }
 </script>
 
