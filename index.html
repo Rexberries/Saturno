@@ -3,180 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saturno - Teman Digitalmu</title>
+    <title>Saturno - Teman Chaca</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1a1a2e;
-            --card-bg: #242444;
-            --accent: #ff758c;
-            --text: #ffffff;
-            --saturn-ring: #ffd369;
+            --bg: #1a1a2e;
+            --card: #242444;
+            --pink: #ff758c;
+            --yellow: #ffd369;
         }
-
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 10px;
             font-family: 'Quicksand', sans-serif;
-            background: var(--bg-color);
-            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                              radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
-            background-size: 550px 550px, 350px 350px;
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            background: var(--bg);
+            color: white;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
         }
-
-        /* Karakter Saturno Lucu */
-        .saturn-container {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            position: relative;
+        #container {
+            background: var(--card);
+            width: 100%;
+            max-width: 400px; /* Diperlebar sedikit agar teks ngga numpuk */
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        /* Saturno Character */
+        .saturn {
+            position: relative; width: 100px; height: 100px; margin: 0 auto 10px;
             animation: float 3s ease-in-out infinite;
         }
-
-        .saturn-body {
-            width: 60px;
-            height: 60px;
-            background: #ffb347;
-            border-radius: 50%;
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 2;
-            box-shadow: inset -5px -5px 0 rgba(0,0,0,0.1);
+        .saturn-ball {
+            width: 60px; height: 60px; background: #ffb347;
+            border-radius: 50%; position: absolute; top: 20px; left: 20px; z-index: 2;
         }
-
-        .face {
-            position: absolute;
-            top: 25px;
-            left: 15px;
-            display: flex;
-            gap: 12px;
+        .ring {
+            width: 100px; height: 30px; border: 6px solid var(--yellow);
+            border-radius: 50%; position: absolute; top: 32px; left: 0px;
+            transform: rotate(-15deg); z-index: 1;
         }
-
+        .eyes { position: absolute; top: 25px; left: 18px; display: flex; gap: 12px; }
         .eye { width: 6px; height: 6px; background: #333; border-radius: 50%; }
-        .blush { width: 8px; height: 4px; background: #ff758c; border-radius: 50%; position: absolute; top: 10px; opacity: 0.5; }
-
-        .rings {
-            width: 100px;
-            height: 30px;
-            border: 8px solid var(--saturn-ring);
-            border-radius: 50%;
-            position: absolute;
-            top: 32px;
-            left: -5px;
-            transform: rotate(-15deg);
-            z-index: 1;
-        }
-
+        
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        /* Chat UI */
-        #container {
-            background: var(--card-bg);
-            width: 90%;
-            max-width: 380px;
-            padding: 30px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            text-align: center;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-
         .bubble {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
             border-radius: 20px;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin: 20px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: left; /* Teks dibuat rata kiri agar rapi dibaca */
+            border-left: 4px solid var(--pink);
         }
-
-        .options { display: grid; gap: 12px; }
-
+        .options { display: flex; flex-direction: column; gap: 12px; }
         button {
-            background: rgba(255, 117, 140, 0.2);
-            border: 1px solid var(--accent);
-            color: white;
-            padding: 12px;
-            border-radius: 15px;
-            cursor: pointer;
+            background: rgba(255,117,140,0.15);
+            border: 2px solid var(--pink);
+            color: white; padding: 14px; border-radius: 15px;
+            cursor: pointer; font-family: inherit; font-weight: bold; font-size: 0.95rem;
             transition: 0.3s;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: bold;
         }
-
-        button:hover {
-            background: var(--accent);
-            transform: scale(1.03);
-        }
-
-        .back-btn { margin-top: 20px; background: none; border: none; color: #888; text-decoration: underline; font-size: 0.8rem; cursor: pointer; }
-
+        button:hover { background: var(--pink); transform: scale(1.02); }
         .hidden { display: none; }
-
+        .reset-btn {
+            margin-top: 20px; background: none; border: none;
+            color: #aaa; text-decoration: underline; font-size: 0.85rem; cursor: pointer;
+        }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div id="container">
-    <div class="saturn-container">
-        <div class="rings"></div>
-        <div class="saturn-body">
-            <div class="face">
+    <div class="saturn">
+        <div class="ring"></div>
+        <div class="saturn-ball">
+            <div class="eyes">
                 <div class="eye"></div>
                 <div class="eye"></div>
-                <div class="blush" style="left: -5px;"></div>
-                <div class="blush" style="left: 25px;"></div>
             </div>
         </div>
     </div>
 
-    <div id="chat-box">
-        <div class="bubble" id="text-display">
-            "HAIII CANTIK AKU <strong>Saturno</strong>. Kadang ada waktu di mana Ardhan lagi ngga bisa balas, jadi di sela itu aku yang bakalan nemenin kamuu 🙂‍↕️ Kamu lagi ngerasain apa sekarang Princess Chaca?"
-        </div>
-        
-        <div class="options" id="btn-group">
-            <button onclick="ans('senang')">😊 Lagi Senang!</button>
-            <button onclick="ans('sedih')">😔 Lagi Sedih</button>
-            <button onclick="ans('lelah')">😴 Lagi Lelah</button>
-            <button onclick="ans('kangen')">💖 Lagi Kangen banget</button>
-        </div>
-
-        <button id="reset" class="back-btn hidden" onclick="location.reload()">Tanya hal lain ke Saturno</button>
+    <div class="bubble" id="text">
+        "HAIII CANTIK! AKU <strong>Saturno</strong>. Kadang ada waktu di mana Ardhan lagi ngga bisa balas, jadi di sela itu aku yang bakalan nemenin kamuu 🙂‍↕️<br><br>Kamu lagi ngerasain apa sekarang Princess Chaca?"
     </div>
+
+    <div class="options" id="btns">
+        <button onclick="pilih('senang')">😊 Lagi Senang!</button>
+        <button onclick="pilih('sedih')">😔 Lagi Sedih</button>
+        <button onclick="pilih('lelah')">😴 Lagi Lelah</button>
+        <button onclick="pilih('kangen')">💖 Lagi Kangen banget</button>
+    </div>
+
+    <button id="reset" class="reset-btn hidden" onclick="location.reload()">Tanya hal lain ke Saturno</button>
 </div>
 
 <script>
-    const data = {
+    const respon = {
         'senang': "YEAYYY SATURNO IKUT SENANGGG! 😻 Apaa yang membuat kamu happy sayangg? cobaa cerita ke Ardhan, pasti dia ketika baca/dengar akan ikutan bahagiaaa",
         'sedih': "OH NOOOOO It's okay buat sedih, itu hal yang wajar kok sayang! 🙂‍↕️ Kalau kamu mauu, coba ceritain ajaa ke Ardhan kamu lagi kenapaa, pasti dia akan balas kok untuk Princess Chaca kesayangannya :D",
         'lelah': "kamu lagi cape yaaa? GAPAPAA KOOO 🫂 Ardhan pasti bangga banget sama kamu karena sudah hebat sekali tiap saat! istirahat dulu yaa sayang, Ardhan akan segera menemani kamuu",
         'kangen': "CIEEEEE ADA YANG KANGEN NIHHH 😋 Sabar sebentar ya sayangkuuu, Ardhan juga pasti kangen sama kamuuu, tapi Ardhan akan segera balik kok!"
     };
 
-    function ans(key) {
-        const display = document.getElementById('text-display');
-        display.innerHTML = "Saturno sedang mengetik..."; // Efek menunggu sebentar
-        
+    function pilih(kategori) {
+        const textElement = document.getElementById('text');
+        textElement.style.opacity = 0;
         setTimeout(() => {
-            display.innerHTML = data[key];
-            document.getElementById('btn-group').classList.add('hidden');
+            textElement.innerHTML = respon[kategori];
+            textElement.style.opacity = 1;
+            document.getElementById('btns').classList.add('hidden');
             document.getElementById('reset').classList.remove('hidden');
-        }, 600);
+        }, 300);
     }
 </script>
 
